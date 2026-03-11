@@ -65,15 +65,12 @@
 \definecolor{Coquelicot}{RGB}{255, 56, 0}
 \definecolor{Teal}{RGB}{2,132,130}
 %Uncomment this if you want to show work-in-progress comments
-%\newcommand{\comment}[1]{{\bf \tt  {#1}}}
+\newcommand{\comment}[1]{{\bf \tt  {#1}}}
 % Uncomment this if you don't want to show comments
-\newcommand{\comment}[1]{}
+%\newcommand{\comment}[1]{}
 % for color names see https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX
 \newcommand{\emcomment}[1]{\textcolor{ForestGreen}{\comment{Elena: {#1}}}}
 \newcommand{\todo}[1]{\textcolor{blue}{\comment{To Do: {#1}}}}
-\newcommand{\tkcomment}[1]{\textcolor{Teal}{\comment{Tristan: {#1}}}}
-\newcommand{\jscomment}[1]{\textcolor{olive}{\comment{Jaydon: {#1}}}}
-\newcommand{\jwcomment}[1]{\textcolor{violet}{\comment{John: {#1}}}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
@@ -114,7 +111,6 @@ elenam@morris.umn.edu
 \date{}
 \maketitle
 \thispagestyle{empty}
-%\alcomment{Should these say @morris.umn.edu?}
 
 \section*{\centering Abstract}
 
@@ -122,7 +118,24 @@ elenam@morris.umn.edu
 \newpage
 \setcounter{page}{1}
 \section{Introduction}\label{sec:intro}
-~\cite{CLRS}
+In the process of earning a bachelor's degree in computer science students typically learn a variety of sorting algorithms, from bubble sort to radix sort and heap sort. They implement several of these algorithms and learn their $O$ running times, advantages, and disadvantages. However, very few courses require students to implement sorting of any data types other than integers, and perhaps strings. Thus, students often graduate without actual experience of adapting algorithms to more complex data types and sorting criteria. They also don't get a clear sense for what $O$ running times really mean (for example, that $O(n \log n)$ may be more efficient than in practice than $O(n)$, depending on the constants.) 
+Getting a hands-on experience with developing a fast sorting algorithm would allow students to understand the tradeoffs and the contexts of applying different algorithms, as well as the art of implementing an algorithm in a programming language, such as choosing more efficient data types and data structures.    
+
+Recognizing the need for such an assignment, I added the \textit{Sorting Competition} in the 2010 offering of UMN Morris CSci 3501 ``Algorithms and Computability'' course.  This is a 5-credit course, covering the first two chapters (and a few selected topics) of~\cite{CLRS}, followed by the theory of computation material. The sorting competition starts after Chapter II of~\cite{CLRS} is covered and includes multiple parts:
+\begin{enumerate}
+\item At least two rounds of preliminary competitions
+\item The final round of the competition
+\item Correctness analysis
+\item Presentations
+\item Final reports
+\end{enumerate}
+The entire assignment takes about a month and usually takes place in labs while more theoretical computability material is covered in lectures. 
+
+The competition is set up as follows: students are given a sorting task (for example, sorting positive integers by the sum of their unique prime factors). Their goal is to design and implement the fastest algorithm in Java. There are some specific restrictions which I detail in Section~\ref{subsec:java-setup}.
+
+\subsection{Java Setup}\label{subsec:java-setup} 
+
+
 
 \section{Acknowledgments}\label{sec:ack}
 
