@@ -143,6 +143,8 @@ In the remainder of the paper I will detail the rules and the setup in Section~\
 The goal of the competition is to come up with the fastest sorting algorithms. The speed is measured from the start of the sorting to its finish, not counting reading in the data and writing it out. This is done by using Java \texttt{System.currentTimeMillis()} method to record the times right before the sorting starts and right after it ends. The sorted array is then written out to a file. 
 Unix \texttt{diff} command may then be used to compare the output of the students' sorting to the correct order of the data. 
 
+In the first couple of years of the competition students had to write their own code to check if the data is sorted correctly. However, I found out that it is more beneficial to provide a \textit{reference implementation}: an implementation of sorting that provides the correct result, but is not optimized for speed. In fact, I often provide an implementation that deliberately includes inefficiencies, such as unnecessarily repeated computations, to give students a ``low-hanging fruit'' for optimization. The reference implementation often calls Java predefined sorting, such as \texttt{Arrays.sort()} (TimSort since \emcomment{fill in the year}, with a comparator. Since many students aren't familiar with this method, it provides an additional pedagogical benefit of demonstrating the use of predefined sorting methods with a customized comparator. 
+
 Over the years very specific rules have been developed, to make sure that students compete based on their understanding of algorithms and Java data structures rather than more specific knowledge, such as parallelization. 
 
 
