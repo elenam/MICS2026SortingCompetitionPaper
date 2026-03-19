@@ -131,6 +131,8 @@ Recognizing the need for such an assignment, I added the \textit{Sorting Competi
 \end{enumerate}
 The entire assignment takes about a month and usually takes place in labs while more theoretical computability material is covered in lectures. 
 
+\emcomment{Mention and reference the 2011 MICS paper}
+
 The competition is set up as follows: students are given a sorting task (for example, sorting positive integers by the sum of their unique prime factors). Their goal is to design and implement the fastest algorithm in Java. There are some specific restrictions which I detail in Section~\ref{subsec:java-setup}.
 \emcomment{And possibly a section on the general setup, such as the timing?}
 The timing uses Java {\tt time} function and is applied only to the sorting itself, not reading in the data or printing out the output. Students are given a \textit{reference implementation}: an implementation of the sorting that provides a correct order, not optimized for speed. The output of the reference implementation is compared to students' sorted data to check if the sorting is correct. This allows students to experiment with different inputs and check their correctness.  
@@ -161,9 +163,44 @@ The reference implementation also serves as a template for students and clearly 
 \end{enumerate}
 
 \subsection{Java setup}\label{subsec:java-setup}
-Java Virtual Machine (JVM) provides a large number of automatic optimizations.  However, these optimizations are implemented in the Just-in-Time (JIT) compiler and require a method to be executed a large number of times before it is optimized. This is known as \textit{JVM warmup}~\cite{warmup}.
+The sorting competition runs in the CS lab that's a Unix lab with the OpenJDK Java, currently OpenJDK 64-Bit Server VM, version 17. In order to avoid delays due to NFS access, the files are copied into a \texttt{/tmp} directory of one of the lab machines. 
+
+Java Virtual Machine (JVM) provides a large number of automatic optimizations.  However, these optimizations are implemented in the Just-in-Time (JIT) compiler and require a method to be executed a large number of times before it is optimized. This is known as \textit{JVM warmup}~\cite{warmup}. In order to take full advantage of the JVM warmup, the template runs the sorting twice: once before timing, to allow the JVM to fully optimize the methods, and then with the timing, to measure the optimized sorting. The input to the second sorting is the cloned unsorted array. 
+
+Moreover, in order to make sure that Java garbage collection from the first run doesn't interfere with the second, timed, run we pause the main thread for 10 milliseconds via \texttt{Thread.sleep(10)} before starting the timed run. This approach reduces unpredictability of the JVM optimization, memory allocation, and garbage collection, and it stabilized the times significantly, especially for sorting with larger memory consumption. 
+
+\emcomment{Mention clearing out all allocated memory}
 
 \subsection{Scoring and competition rounds}\label{subsec:rounds}
+There may be occasional system tasks running on the machine during the competition. Therefore each program is ran three times on each dataset (restarting the JVM every time), and the median value is taken to be the result. It's not unusual to encounter a time outlier, especially with large memory allocation, but the median approach provides stability. For example, out of these three results of running the same program (in milliseconds), 9193, 10039, 9551, the one that counts for the competition is 9551. 
+
+Every competition has at least three rounds (at least two preliminary and one final), each round featuring at least two different datasets. The datasets in the same round often differ in the number of elements to sort and in some other parameters of the data generator (see Section~\ref{sec:past} for examples). 
+
+Students typically work in teams of two. Every team gets a team number; their code is written in a file \texttt{GroupN.java}, where \texttt{N} is replaced by their group number. 
+\texttt{Group0.java} is the reference implementation, and it's ran first. 
+Up until the final competition the groups maintain their anonymity, known only by their group number, and only their compiled code (the \texttt{.class} files), but not the source Java code, is made public. Making the \texttt{.class} files public allows students to test their programs against solutions by others without revealing anyone's source code. 
+
+The score in a round is determined as follows:
+\begin{itemize}
+\item 
+\end{itemize}
+
+\begin{verbatim}
+group 2 took place  1. 
+The sum of places is 3, the sum of medians is 259.0
+group 0 took place  2. 
+The sum of places is 5, the sum of medians is 6900.0
+group 6 took place  3. 
+The sum of places is 7, the sum of medians is 7308.0
+group 3 took place  4. 
+The sum of places is 7, the sum of medians is 1000021.0
+group 5 took place  5. 
+The sum of places is 9, the sum of medians is 36843.0
+group 1 took place  6. 
+The sum of places is 11, the sum of medians is 2000000.0
+group 4 took place  7. 
+The sum of places is 14, the sum of medians is 2000000.0
+\end{verbatim}
 
 \section{Past challenges and takeaways}\label{sec:past}
 
