@@ -188,7 +188,7 @@ The score in a round is determined as follows:
 \item If the sum of places in the same for two teams, the sum of medians of all datasets decides the tie. 
 \item If a group sorts incorrectly, a penalty of 1000000 milliseconds is added for each incorrectly sorted dataset, pushing incorrect solutions towards the end of the list.
 \end{itemize}
-Below is the outcome of one of the preliminary rounds in 2023. Groups 1 and 4 sorted both datasets incorrectly, so they appear at the end of the list. Group 0 (the reference implementation) is still outperforming most of the submissions. That is because the focus at preliminary rounds is often on correctness, not yet at the optimizations. It's also worth noting that Group 3 sorted one dataset correctly, and the other one incorrectly. Since its time in the correctly sorted run was quite good, it still ended up in 4th place.    
+Below is the outcome of one of the preliminary rounds in 2023. Groups 1 and 4 sorted both datasets incorrectly, so they appear at the end of the list. Group 0 (the reference implementation) is still outperforming most of the submissions. That is because the focus at preliminary rounds is often on correctness, not yet at the optimizations. It's also worth noting that Group 3 sorted one dataset correctly, and the other one incorrectly. Since its time in the correctly sorted run was quite good (they actually were 1st, as the log indicates) it still ended up in 4th place.    
 \begin{verbatim}
 group 2 took place  1. 
 The sum of places is 3, the sum of medians is 259.0
@@ -206,7 +206,13 @@ group 4 took place  7.
 The sum of places is 14, the sum of medians is 2000000.0
 \end{verbatim}
 
+\subsection{Correctness check}\label{subsec:correct}
+
 \section{Past challenges and takeaways}\label{sec:past}
+The 15 years of the sorting competition featured a variety of problems, some offered by me and some by my colleague Dr. Dolan who taught approximately 1/3 of all course offerings. He didn't utilize public github repositories for his challenges the way I did, so I don't have access to them. However, even a subset of these challenges provides a good overview of the problems and solutions. It is also important to note that Dr. Dolan and I often collaborated on developing the challenges, regardless of who of us taught the class. The way to determine if a challenge was ``good'' was to start tossing ideas around about potential approaches to sorting - and if we identified multiple ones as something to explore, rather than definitely agreeing on the best one, the challenge was considered to be a good one. 
+We also carefully checked the problem statement to make sure that the ordering was total, with no ambiguity.  
+
+ 
 
 \section{Competition as community building}\label{sec:community}
 
