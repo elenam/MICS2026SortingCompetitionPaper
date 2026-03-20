@@ -180,11 +180,15 @@ Students typically work in teams of two. Every team gets a team number; their co
 \texttt{Group0.java} is the reference implementation, and it's ran first. 
 Up until the final competition the groups maintain their anonymity, known only by their group number, and only their compiled code (the \texttt{.class} files), but not the source Java code, is made public. Making the \texttt{.class} files public allows students to test their programs against solutions by others without revealing anyone's source code. 
 
+Group 0 (the reference implementation) runs first and outputs the sorted dataset into a file. The file is then used by a Unix \texttt{diff} command to compare the sorted file produced by every group to the output of Group 0. If they match, the sorting is correct, otherwise it's not. Space characters are ignored in the \texttt{diff}. 
+
 The score in a round is determined as follows:
 \begin{itemize}
-\item 
+\item The sum of places on all of the datasets in the round. For example, if a team was second on the first dataset and third on the second one in a round with two datasets, the sum of places is 5. 
+\item If the sum of places in the same for two teams, the sum of medians of all datasets decides the tie. 
+\item If a group sorts incorrectly, a penalty of 1000000 milliseconds is added for each incorrectly sorted dataset, pushing incorrect solutions towards the end of the list.
 \end{itemize}
-
+Below is the outcome of one of the preliminary rounds in 2023. Groups 1 and 4 sorted both datasets incorrectly, so they appear at the end of the list. Group 0 (the reference implementation) is still outperforming most of the submissions. That is because the focus at preliminary rounds is often on correctness, not yet at the optimizations. It's also worth noting that Group 3 sorted one dataset correctly, and the other one incorrectly. Since its time in the correctly sorted run was quite good, it still ended up in 4th place.    
 \begin{verbatim}
 group 2 took place  1. 
 The sum of places is 3, the sum of medians is 259.0
