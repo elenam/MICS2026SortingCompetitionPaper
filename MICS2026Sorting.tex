@@ -212,14 +212,17 @@ The sum of places is 14, the sum of medians is 2000000.0
 The 15 years of the sorting competition featured a variety of problems, some offered by me and some by my colleague Dr. Dolan who taught approximately 1/3 of all course offerings. He didn't utilize public github repositories for his challenges the way I did, so I don't have access to them. However, even a subset of these challenges provides a good overview of the problems and solutions. It is also important to note that Dr. Dolan and I often collaborated on developing the challenges, regardless of who of us taught the class. The way to determine if a challenge was ``good'' was to start tossing ideas around about potential approaches to sorting - and if we identified multiple ones as something to explore, rather than definitely agreeing on the best one, the challenge was considered to be a good one. 
 We also carefully checked the problem statement to make sure that the ordering was total, with no ambiguity.  
 
-\emcomment{list some, not all; not all on github}
+\emcomment{list some, not all; not all on github; omitting some details}
 
 \emcomment{How to find things in a repo}
 \begin{itemize}
-\item \emcomment{2014: strings of different length, first by length, then by number of 1s in binary representation, and then lexicographically  (all in increasing order)}
+\item \emcomment{2014: strings of different length, first by length, then by the number of 1s in binary representation, and then lexicographically  (all in increasing order)}
 \item \emcomment{2016: points on a grid and timestamp, "walks", distance from the closest of two points}
 \item \emcomment{2017: by $P(N)$ defined the product of two smallest different prime factors or the only prime factor of $N$ if it only has one. If $P(N_1) = P(N_2)$, $N_1$ and  $N_2$ are compared as regular numbers.}
-\item \emcomment{}
+\item \emcomment{2021: non-uniformly distributed numbers (with the probability decreasing for larger numbers) that are sorted by the number of 1s in their binary representations, then by the length of the longest substring of zeros and ones that appears at least twice in their binary representation, and then by value}
+\item \emcomment{2022: numbers that are represented as decimal fractions and rational numbers (preserving the format). The numbers are compared by value. For the numbers of equal value the decimal representation is considered ``smaller'' than any fraction for positive numbers and ``larger'' for negatives. If two rational fractions have the exact same value then the one with the larger numerator is larger for positive numbers and smaller for negative.}
+\item \emcomment{2023: Fixed length integers (padded with zeros) by the sum of all unique prime factors of the numbers in increasing order. Numbers with the sums being equal are ordered by value in decreasing order.}
+\item \emcomment{2025: Binary strings of the same length are sorted by their distance from a randomly generated ``target'' string. Strings of equal distance are compared by the value of the number they represent.}
 \end{itemize}
  
 
