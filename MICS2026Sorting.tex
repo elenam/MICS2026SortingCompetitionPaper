@@ -113,6 +113,12 @@ elenam@morris.umn.edu
 \thispagestyle{empty}
 
 \section*{\centering Abstract}
+15 years ago, at MICS 2011, I presented a paper on a newly developed multi-part assignment for UMN Morris CSci 3501 “Algorithms and Computability” class: a sorting competition. This assignment is still a part of the course, with a novel challenge every year. The assignment was created to give students experience with optimizing an algorithm not just for theoretical Big-O efficiency, but for the speed of a concrete implementation in a programming language. The competition measures the time of the sorting part of the program (excluding input and output); the time of the programs that didn’t sort in the correct order was not counted. The programming language is Java since it’s the language used in a prerequisite of the course, and therefore all students were familiar with it. The competition went very well in terms of the students’ interest, creativity, and the ability to explore both the algorithms and the Java platform. 
+
+The competition became a tradition, and most years was open to submissions from alumni, in addition to students in the class. 
+The multi-part course assignment includes a presentation, and students in the class have an option of presenting on solutions from alums, which enriches the learning experience since such submissions are often based on real-world programming expertise. 
+
+In this paper I discuss approaches to choosing a good competition problem, the setup and the rules, and the steps of the assignment. Most importantly, I hope the paper conveys the excitement of learning algorithms not just through theoretical exercises, but through real, unpredictable work with interesting non-textbook data and the nuances of a real world programming platform – the excitement that makes students come back for more sorting fun even after graduation. 
 
 
 \newpage
@@ -271,7 +277,8 @@ The second place group had a reasonably efficient way of computing prime factors
 
 One group used the Sieve of Eratosthenes for computing prime factors. However, some of the given numbers are very large, and this approach doesn't result in the fastest algorithm. There were other groups that explored the idea of storing the already computed sums of prime factors in a hashmap, but ran into correctness issues.
 
-This computation also featured a submission from a student not in the class (a senior) whose algorithm was correct and the fastest (however, external submissions aren't counted as a benchmark for expectations for the class). This solution took advantage of storing the entire data item in Java \texttt{long}, where the first 32 bits store the sum of the prime factors and the second 32 bits store $-N$ since the sorting by value is done in reverse. This allowed the student to use predefined stream sorting methods. 
+This computation also featured a submission from a student not in the class (a senior) whose algorithm was correct and the fastest (however, external submissions aren't counted as a benchmark for expectations for the class). This solution took advantage of storing the entire data item in Java \texttt{long}, where the first 32 bits store the sum of the prime factors and the second 32 bits store 
+$-N$ since the sorting by value is done in reverse. This allowed the student to use predefined stream sorting methods. 
 
 One thing to note is that the ability to store data in Java primitive type gives a very significant improvement. Not all challenges and not all cases allow for this optimization, but if it's possible, it is almost certain to be among the fastest solutions. 
 
@@ -293,10 +300,22 @@ Students in the class are given an option to do a presentation on an out-of-clas
 It is great to see the excitement about a class assignment that keeps connecting alumni with students, even if indirectly. Establishing a tradition that survives and thrives for 15 years is not a small thing. 
 
 \section{Conclusions and the future}\label{sec:conclusions}
-\emcomment{main lessons}
+Considering 15 years of running the sorting competition, there are a few technical takeaways:
+\begin{enumerate}
+\item Data representation matters. In a language like Java that has a significant overhead for using objects the ability to store data in primitive types (ints, doubles) is a great benefit. Other data representation advantages include storing precomputed fields in a custom object, such as the sum of prime factors in 2023 competition.  
+\item Fixed length data is a good opportunity for radix sort. Finding the right tradeoffs between the number of paths of radix sort and the range each of the paths covers is important. 
+\item Quicksort is a fast, in-place algorithm that can be modified to deal efficiently with a large number of duplicates if the problem includes those. However, it's not stable, so using it in a combined sorting should be done carefully.  It is common for quicksort to appear within top ten solutions (although the two detailed in Sections~ref{subsec:2022} and~\ref{subsec:2023} are somewhat of an exception due to the specifics of the problems). The other option of dealing with duplicates is to split data into ``buckets'' and sort each ``bucket'' separately, then combine.
+\item Taking advantage of data structures and methods already defined in Java can be very beneficial.
+For example, hashing results of a computation helps to avoid repeated long computations, e.g. prime factors. TimSort is a good sorting algorithm that allows students to focus just on optimizing a comparison.  
+\end{enumerate}
+In addition to purely technical takeaways there are other lessons brought on by the competition: it promotes team work and communication, it teaches students to communicate technical ideas and to use resources (there is nothing wrong with studying existing algorithms and modifying an existing implementation - there are plenty of details that need to be worked out in the process). 
+
+Keeping the tradition of the sorting competition also works as community-building tool, fostering the culture of creative problem solving. The instructors need to be careful with AI-proofing the challenges (there should be no easy way to immediately implement the solution, although using AI resources as a supplement is certainly an option). Given the intricacy and the novelty of the data and the sorting criteria, I believe that even with AI resources the problem still fosters analytical skills and attention to implementation details. 
+
+I hope the competition continues for as long as the course exists. 
 
 \section{Acknowledgments}\label{sec:ack}
-I am grateful to Dr. Peter Dolan for sharing the excitement about the competition and keeping it going in years when he teaches the class, as well as for numerous enlightening and fun discussions of potential competition challenges. I am also thankful to alumni who provided ideas for some of these challenges. Finally, my great appreciation goes to all participants, students and alumni, who bring in cool ideas and hard work to explore this exciting area of computer science.  
+I am grateful to Dr. Peter Dolan for sharing the excitement about the competition and keeping it going in years when he teaches the class, as well as for numerous enlightening and fun discussions of potential competition challenges. I am also thankful to alumni who provided ideas for some of these challenges. Finally, my great appreciation goes to all participants, students and alumni, who bring in problem solving skills, creativity, and hard work to explore this exciting area of computer science.  
 
 
 \bibliographystyle{acm}
