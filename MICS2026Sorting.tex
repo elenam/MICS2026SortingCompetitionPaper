@@ -250,6 +250,15 @@ so I will pick two, 2022 and 2023 (see the descriptions of the sorting problem a
 \subsection{2022 challenge}\label{subsec:2022}
 As mentioned above, the sorting involves decimal and rational fractions that are sorted by value, but are required to preserve the original format, such as $0.5$ or $\frac{3}{6}$ and have rules for resolving orderings of the numbers that have the same value, but different formats (see~\ref{subsec:list} and~\cite{sorting2022} for details).  
 
+The top solution for this challenge utilized the approach that split the rationals and the decimals into two separate arrays and then further into ``buckets'', sorting each bucket using its own sorting algorithm: Java-provided TimSort for rationals and radix sort with counting sort for decimals. At the end all of the buckets and the two types of numbers are merged together, just like they would be in merge sort. The solution utilizes a sophisticated data representation that stores the numbers in the data size they fit in: Java \texttt{double} if possible and the special class BigRational for numbers that require more precision than double provides. The comparison between different types of numbers employs a variety of combinations of cases. 
+
+The second place solution approached the problem quite differently: they split the data into positive and negative numbers. Within each subset they implemented a variant of bucket sort with a large number of buckets (based on the~\cite{CLRS} bucket sort), each bucket sorted using insertion sort. Interestingly, the positive and negative subsets were sorted by two different Java threads, and even though the program was pinned to a single core (see~\ref{subsec:allowed-features}), multithreading provided some improvement, presumably due to memory caching and CPU-level optimizations. This solution didn't need to merge the resulting buckets, just to concatenate them.  However, insertion sort, even on small buckets, was a bit slower than the winning group's solution. 
+
+One group didn't go as far as the winning two in terms of developing their sorting algorithms, but put a lot of effort into optimizing the comparator, while keeping the original Java-provided TimSort. In particular, one group took advantage of the difference in sign and immediately provided the comparison results for a positive and a negative number. Another group presorted the given array by string length in a hope of creating a partially sorted array before passing it to TimSort since TimSort takes advantage of partial sorting. A yet another group implemented its own customized quicksort. 
+There were also two groups that tried to optimize the comparison, but ended up not sorting correctly on the final competition. 
+
+Overall, the challenge allowed for a variety of solutions that included different sorting algorithms and their combinations. The main challenge was to avoid unnecessary overhead during the comparison, and yet to be able to preserve the precision for all cases and the original format of the data. 
+
 \subsection{2023 challenge}\label{subsec:2023}
 
 \section{Competition as community building}\label{sec:community}
