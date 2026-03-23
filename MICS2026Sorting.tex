@@ -121,7 +121,7 @@ elenam@morris.umn.edu
 In the process of earning a bachelor's degree in computer science students typically learn a variety of sorting algorithms, from bubble sort to radix sort and heap sort. They implement several of these algorithms and learn their $O$ running times, advantages, and disadvantages. However, very few courses require students to implement sorting of any data types other than integers, and perhaps strings. Thus, students often graduate without actual experience of adapting algorithms to more complex data types and sorting criteria. They also don't get a clear sense for what $O$ running times really mean (for example, that $O(n \log n)$ may be more efficient than in practice than $O(n)$, depending on the constants.) 
 Getting a hands-on experience with developing a fast sorting algorithm would allow students to understand the tradeoffs and the contexts of applying different algorithms, as well as the art of implementing an algorithm in a programming language, such as choosing more efficient data types and data structures.    
 
-Recognizing the need for such an assignment, I added the \textit{Sorting Competition} in the 2010 offering of UMN Morris CSci 3501 ``Algorithms and Computability'' course.  This is a 5-credit course, covering the first two chapters (and a few selected topics) of~\cite{CLRS}, followed by the theory of computation material. The sorting competition starts after Chapter II of~\cite{CLRS} is covered and includes multiple parts:
+Recognizing the need for such an assignment, I added the \textit{Sorting Competition} in the 2010 offering of UMN Morris CSci 3501 ``Algorithms and Computability'' course~\cite{mics2011}.  This is a 5-credit course, covering the first two chapters (and a few selected topics) of~\cite{CLRS}, followed by the theory of computation material. The sorting competition starts after Chapter II of~\cite{CLRS} is covered and includes multiple parts:
 \begin{enumerate}
 \item At least two rounds of preliminary competitions
 \item The final round of the competition
@@ -130,8 +130,6 @@ Recognizing the need for such an assignment, I added the \textit{Sorting Competi
 \item Final reports
 \end{enumerate}
 The entire assignment takes about a month and usually takes place in labs while more theoretical computability material is covered in lectures. 
-
-\emcomment{Mention and reference the 2011 MICS paper}
 
 The competition is set up as follows: students are given a sorting task (for example, sorting positive integers by the sum of their unique prime factors). Their goal is to design and implement the fastest algorithm in Java. There are some specific restrictions which I detail in Section~\ref{subsec:java-setup}.
 \emcomment{And possibly a section on the general setup, such as the timing?}
@@ -227,6 +225,7 @@ The 15 years of the sorting competition featured a variety of problems, some off
 Dr. Dolan and I often collaborated on developing the challenges, regardless of who of us taught the class. The way to determine if a challenge was ``good'' was to start tossing ideas around about potential approaches to sorting - and if we identified multiple ones as something to explore, rather than definitely agreeing on the best one, the challenge was considered to be a good one. 
 We also carefully cross-checked the problem statement to make sure that the ordering was total, with no ambiguity.  
 
+\subsection{Selected past challenges}\label{subsec:list}
 %\emcomment{list some, not all; not all on github; omitting some details}
 Below I list the sorting competition challenges that posted in my github repositories. Since these are all past challenges, all of the final code and the results are posted. The code is located in the \texttt{src} directory that also contains the data generator, if available, and the reference implementation Group 0. 
 The \texttt{README.md} file describes the problem, provides links to the results of all runs (preliminary and final), the results, and has links to slides from students' presentations slides. 
@@ -238,11 +237,20 @@ In the list of challenges below the specifics of data generation and parameters,
 \item 2016: 2D points on a grid with a ``timestamp'', generated as ``walks'', i.e. the next points separated by a small ``step'' from the previous, to be sorted by the distance to the closest of two separately generated constant points, with the timestamp serving as a tie breaker~\cite{sorting2016}.
 \item 2017: Positive integers to be sorted by $P(N)$ defined as the product of two smallest different prime factors or the only prime factor of $N$ if it only has one. If $P(N_1) = P(N_2)$, $N_1$ and  $N_2$ are compared as regular numbers~\cite{sorting2017}.
 \item 2021: non-uniformly distributed numbers (with the probability decreasing for larger numbers) to be sorted by the number of 1s in their binary representations, then by the length of the longest substring of 0s and 1s that appears at least twice in their binary representation, with the actual value of the numbers as a tie-breaker~\cite{sorting2021}. 
-\item \emcomment{2022: numbers that are represented as decimal fractions and rational numbers (preserving the format). The numbers are compared by value. For the numbers of equal value the decimal representation is considered ``smaller'' than any fraction for positive numbers and ``larger'' for negatives. If two rational fractions have the exact same value then the one with the larger numerator is larger for positive numbers and smaller for negative.}
-\item \emcomment{2023: Fixed length integers (padded with zeros) by the sum of all unique prime factors of the numbers in increasing order. Numbers with the sums being equal are ordered by value in decreasing order.}
-\item \emcomment{2025: Binary strings of the same length are sorted by their distance from a randomly generated ``target'' string. Strings of equal distance are compared by the value of the number they represent.}
+\item 2022: numbers that are represented as decimal fractions and rational numbers are to be sorted  by value.  For the numbers of equal value the decimal representation is considered ``smaller'' than any fraction for positive numbers and ``larger'' for negatives. The resulting sorted results must be written to a file preserving the original format~\cite{sorting2022}. 
+\item 2023: Fixed length integers (padded with zeros) are to sorted by the sum of all unique prime factors of the numbers in increasing order. Numbers with the sums being equal are ordered by value in decreasing order~\cite{sorting2023}.
+\item 2025: Binary strings of the same length are to be sorted by their distance from a randomly generated ``target'' string. Strings of equal distance are compared by the value of the number they represent~\cite{sorting2025}.
 \end{itemize}
+Some of the challenges have some common themes. For example, the 2017 and 2023 challenges both deal with primary factor of numbers, and the 2016 and 2025 are both based on distances from a specified constant or constants and have some similarity in data generation. 
+However, similarity to past years' problems is not a concern since they are separated by several years, so there cannot possibly be an overlap of students. We also observed that small details, such as whether the length of the input strings is fixed, the data distribution, etc. make a difference in what algorithms produce the fastest solution, so even seemingly similar problems present unique challenges. 
+
+The competition problems seem convoluted, but this leads to more interesting solutions and a wider variety of approaches. I don't have room to go over solutions for all challenges,
+so I will pick two, 2022 and 2023 (see the descriptions of the sorting problem above), and discuss the algorithms and data representation that were the most efficient for these cases. 
  
+\subsection{2022 challenge}\label{subsec:2022}
+As mentioned above, the sorting involves decimal and rational fractions that are sorted by value, but are required to preserve the original format, such as $0.5$ or $\frac{3}{6}$ and have rules for resolving orderings of the numbers that have the same value, but different formats (see~\ref{subsec:list} and~\cite{sorting2022} for details).  
+
+\subsection{2023 challenge}\label{subsec:2023}
 
 \section{Competition as community building}\label{sec:community}
 \emcomment{Presentations, alumni participation}
