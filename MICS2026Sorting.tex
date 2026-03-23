@@ -167,7 +167,8 @@ Java Virtual Machine (JVM) provides a large number of automatic optimizations.  
 
 Moreover, in order to make sure that Java garbage collection from the first run doesn't interfere with the second, timed, run we pause the main thread for 10 milliseconds via \texttt{Thread.sleep(10)} before starting the timed run. This approach reduces unpredictability of the JVM optimization, memory allocation, and garbage collection, and it stabilized the times significantly, especially for sorting with larger memory consumption. 
 
-\emcomment{Mention clearing out all allocated memory}
+%\emcomment{Mention clearing out all allocated memory}
+Since the sorting is performed twice within each run of the program, it is essential that all memory allocated in the sorting is completely freed at the end, to make sure that nothing gets reused from the previous sorting. This requirement is an essential part of the correctness check (see Section~\ref{subsec:correct}). 
 
 \subsection{Scoring and competition rounds}\label{subsec:rounds}
 There may be occasional system tasks running on the machine during the competition. Therefore each program is ran three times on each dataset (restarting the JVM every time), and the median value is taken to be the result. It's not unusual to encounter a time outlier, especially with large memory allocation, but the median approach provides stability. For example, out of these three results of running the same program (in milliseconds), 9193, 10039, 9551, the one that counts for the competition is 9551. 
@@ -238,7 +239,7 @@ In the list of challenges below the specifics of data generation and parameters,
 \item 2017: Positive integers to be sorted by $P(N)$ defined as the product of two smallest different prime factors or the only prime factor of $N$ if it only has one. If $P(N_1) = P(N_2)$, $N_1$ and  $N_2$ are compared as regular numbers~\cite{sorting2017}.
 \item 2021: non-uniformly distributed numbers (with the probability decreasing for larger numbers) to be sorted by the number of 1s in their binary representations, then by the length of the longest substring of 0s and 1s that appears at least twice in their binary representation, with the actual value of the numbers as a tie-breaker~\cite{sorting2021}. 
 \item 2022: numbers that are represented as decimal fractions and rational numbers are to be sorted  by value.  For the numbers of equal value the decimal representation is considered ``smaller'' than any fraction for positive numbers and ``larger'' for negatives. The resulting sorted results must be written to a file preserving the original format~\cite{sorting2022}. 
-\item 2023: Fixed length integers (padded with zeros) are to sorted by the sum of all unique prime factors of the numbers in increasing order. Numbers with the sums being equal are ordered by value in decreasing order~\cite{sorting2023}.
+\item 2023: Fixed length integers (padded with zeros) are to be sorted in increasing order by the sum of all unique prime factors. Numbers with the sums being equal are ordered by value in decreasing order~\cite{sorting2023}.
 \item 2025: Binary strings of the same length are to be sorted by their distance from a randomly generated ``target'' string. Strings of equal distance are compared by the value of the number they represent~\cite{sorting2025}.
 \end{itemize}
 Some of the challenges have some common themes. For example, the 2017 and 2023 challenges both deal with primary factor of numbers, and the 2016 and 2025 are both based on distances from a specified constant or constants and have some similarity in data generation. 
@@ -260,14 +261,42 @@ There were also two groups that tried to optimize the comparison, but ended up n
 Overall, the challenge allowed for a variety of solutions that included different sorting algorithms and their combinations. The main challenge was to avoid unnecessary overhead during the comparison, and yet to be able to preserve the precision for all cases and the original format of the data. 
 
 \subsection{2023 challenge}\label{subsec:2023}
+In this challenge fixed length integers (padded with zeros) are to be sorted in increasing order by the sum of all unique prime factors. Numbers with the sums being equal are ordered by value in decreasing order. See~\cite{sorting2023} for details. 
+
+This competition, just like the one in 2022 and many others, favors approaches that avoid unnecessary  computations. Note that there are two aspects of optimization: finding the prime factors and the actual sorting. Different groups focused on different aspects of the challenge. 
+
+The winning group used a hashmap to store the sums of prime factors that they already computed, keyed by the number for which they computed it. This allowed them to reuse already computed prime factors if they encountered these numbers again in the process of dividing a new number by its prime factor. The approach is similar to memoization. The comparison method looked up the sum of prime factors of the two numbers (and if not stored yet, computed them and added to the hashmap), and if the two were equal, would resolve the difference by comparing the values.
+
+The second place group had a reasonably efficient way of computing prime factors without storing them, then split the data into buckets by the sum of prime factors (there were a lot of duplicates), and then sorted each ``bucket'' using Java \texttt{Collections.sort()} method. 
+
+One group used the Sieve of Eratosthenes for computing prime factors. However, some of the given numbers are very large, and this approach doesn't result in the fastest algorithm. There were other groups that explored the idea of storing the already computed sums of prime factors in a hashmap, but ran into correctness issues.
+
+This computation also featured a submission from a student not in the class (a senior) whose algorithm was correct and the fastest (however, external submissions aren't counted as a benchmark for expectations for the class). This solution took advantage of storing the entire data item in Java \texttt{long}, where the first 32 bits store the sum of the prime factors and the second 32 bits store $-N$ since the sorting by value is done in reverse. This allowed the student to use predefined stream sorting methods. 
+
+One thing to note is that the ability to store data in Java primitive type gives a very significant improvement. Not all challenges and not all cases allow for this optimization, but if it's possible, it is almost certain to be among the fastest solutions. 
 
 \section{Competition as community building}\label{sec:community}
-\emcomment{Presentations, alumni participation}
+%\emcomment{Presentations, alumni participation}
+Over the years the sorting competition became a tradition that goes beyond the CSci 3501 class. The final round, as well as the presentations, are open to anyone, and often gather a group of CSci faculty and students from other classes. 
+
+Moreover, the competition itself is open to anyone interested in participating. 
+The announcement about the competition is typically sent to the mailing list that includes current students and alumni. 
+Participants who are not in the class have an option of revealing their name or remain anonymous, identified only by the group number (their code is posted with everyone else's, however)
+Several alumni, some from more than 10 years ago, participated more than once. 
+It's not unusual for these submissions to do very well -- some of these former students have worked in Java for years, including specifically on program optimization, and some are putting in an effort just for fun.
+This past fall, in 2025, we had three submissions from alumni - a very exciting development!
+
+Submissions from outside of the class aren't limited to alumni, though. In the past we've had seniors submit their solutions. We also once had a sophomore who decided to give it a try before taking the class, and did fairly well (although didn't win). 
+
+Students in the class are given an option to do a presentation on an out-of-class submissions (since the authors aren't available to present), especially the ones that did quite well, for extra credit. This is an opportunity to explore algorithms and program optimization done by experts, and is a very valuable experience. 
+
+It is great to see the excitement about a class assignment that keeps connecting alumni with students, even if indirectly. Establishing a tradition that survives and thrives for 15 years is not a small thing. 
 
 \section{Conclusions and the future}\label{sec:conclusions}
+\emcomment{main lessons}
 
 \section{Acknowledgments}\label{sec:ack}
-Peter
+I am grateful to Dr. Peter Dolan for sharing the excitement about the competition and keeping it going in years when he teaches the class, as well as for numerous enlightening and fun discussions of potential competition challenges. I am also thankful to alumni who provided ideas for some of these challenges. Finally, my great appreciation goes to all participants, students and alumni, who bring in cool ideas and hard work to explore this exciting area of computer science.  
 
 
 \bibliographystyle{acm}
