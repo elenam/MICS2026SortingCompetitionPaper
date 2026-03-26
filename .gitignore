@@ -10,3 +10,4 @@
 *.vrb
 *.fdb_latexmk
 *.fls
+presentation/*.pdf
